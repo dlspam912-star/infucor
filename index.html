@@ -24,18 +24,6 @@
             overflow-x: hidden;
         }
 
-        .parallax-wrapper {
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Corrección del efecto parallax para evitar que las imágenes se desnuquen del encuadre */
-        .parallax-layer {
-            will-change: transform;
-            transition: transform 0.1s ease-out;
-        }
-        
-        /* Asegurar que el contenedor recorte cualquier exceso de movimiento de la imagen */
         .img-github-placeholder {
             background-color: #f3f4f6;
             display: flex;
@@ -43,18 +31,15 @@
             justify-content: center;
             border-radius: 1.5rem;
             position: relative;
-            overflow: hidden; /* Mantiene la imagen dentro */
+            overflow: hidden; 
             border: 2px dashed #d1d5db;
-            transition: all 0.3s ease;
         }
 
-        /* Estilo base de la imagen para permitir movimiento sin salirse */
         .img-github-placeholder img {
             width: 100%;
             height: 100%; 
             object-fit: cover;
             display: block;
-            transform: scale(1.1); /* Ligero aumento para dar margen al movimiento parallax */
         }
 
         .header-fixed {
@@ -83,9 +68,7 @@
             box-shadow: -10px 0 30px rgba(0,0,0,0.1);
         }
 
-        #menu-overlay.active {
-            right: 0;
-        }
+        #menu-overlay.active { right: 0; }
 
         #cart-overlay {
             position: fixed;
@@ -103,9 +86,7 @@
             color: var(--verde);
         }
 
-        #cart-overlay.active {
-            right: 0;
-        }
+        #cart-overlay.active { right: 0; }
 
         .nav-link {
             font-size: 1rem;
@@ -117,12 +98,6 @@
         }
 
         .nav-link:hover { color: var(--rosa); }
-
-        section {
-            background-color: transparent;
-        }
-
-        .img-loaded { border: none !important; }
 
         .reveal {
             opacity: 0;
@@ -198,51 +173,51 @@
             position: relative;
         }
 
-        .opinion-card {
-            background: white;
-            border: 1px solid rgba(45, 90, 39, 0.05);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .opinion-card:hover {
-            transform: translateY(-5px) !important;
-            box-shadow: 0 20px 40px rgba(45, 90, 39, 0.05);
-            border-color: var(--rosa);
+        .flavor-selector.active {
+            border-color: var(--verde);
+            background: rgba(45, 90, 39, 0.05);
         }
 
-        .impact-cup-trigger {
+        .tea-cup-container {
             position: relative;
-            display: inline-flex;
             cursor: pointer;
+        }
+        .tea-cup-svg {
             transition: transform 0.3s ease;
         }
-        .impact-cup-trigger:hover {
-            transform: scale(1.1);
+        .tea-cup-container:hover .tea-cup-svg {
+            transform: scale(1.05);
         }
-        .impact-tooltip {
-            visibility: hidden;
-            opacity: 0;
+        .info-card {
             position: absolute;
-            bottom: 120%;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%) translateY(10px);
-            width: 280px;
+            transform: translate(-50%, -50%) scale(0.9);
             background: white;
-            border: 1px solid var(--rosa);
             padding: 1.5rem;
             border-radius: 1.5rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            z-index: 50;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            text-align: left;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 280px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 10;
+            border: 1px solid var(--rosa);
         }
-        .impact-cup-trigger:hover .impact-tooltip {
-            visibility: visible;
+        .tea-cup-container:hover .info-card {
             opacity: 1;
-            transform: translateX(-50%) translateY(0);
+            transform: translate(-50%, -50%) scale(1);
+            pointer-events: auto;
+        }
+        .opinion-card {
+            background: white;
+            padding: 2rem;
+            border: 1px solid rgba(45, 90, 39, 0.05);
+            transition: all 0.3s ease;
+        }
+        .opinion-card:hover {
+            border-color: var(--rosa);
+            transform: translateY(-5px);
         }
     </style>
 </head>
@@ -269,7 +244,7 @@
         </div>
     </div>
 
-    <!-- Menú Hamburguesa Derecho -->
+    <!-- Navegación -->
     <div id="menu-overlay">
         <button id="close-menu" class="self-end text-2xl mb-8"><i class="fas fa-times"></i></button>
         <nav class="flex flex-col">
@@ -277,13 +252,13 @@
             <a href="#sabores" class="nav-link">Perfiles de Sabor</a>
             <a href="#raiz" class="nav-link">Historia y Origen</a>
             <a href="#comparativa" class="nav-link">Matcha vs Té</a>
-            <a href="#rituales" class="nav-link">El Ritual</a>
+            <a href="#ritual" class="nav-link">El Ritual</a>
             <a href="#sostenibilidad" class="nav-link">Impacto</a>
             <a href="#comunidad" class="nav-link">Comunidad</a>
         </nav>
     </div>
 
-    <!-- Carrito Derecho -->
+    <!-- Carrito -->
     <div id="cart-overlay">
         <div class="flex justify-between items-center mb-8">
             <h2 class="text-xl font-extrabold uppercase tracking-widest">Mi Cesta</h2>
@@ -301,7 +276,6 @@
         </div>
     </div>
 
-    <!-- Header -->
     <nav class="header-fixed">
         <div class="max-w-6xl mx-auto px-6 h-16 flex justify-between items-center">
             <div class="text-lg font-extrabold tracking-[0.4em] uppercase">Infucor</div>
@@ -315,7 +289,7 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero -->
     <header class="pt-40 pb-24 px-6 text-center bg-white relative overflow-hidden">
         <div class="max-w-3xl mx-auto reveal active z-10 relative">
             <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">Amor en cada infusión.</h1>
@@ -329,35 +303,35 @@
         </div>
     </header>
 
-    <!-- Nuestra Colección -->
+    <!-- Colección -->
     <section id="coleccion" class="py-20 px-6 bg-[#fcfcfc] overflow-hidden">
         <div class="max-w-6xl mx-auto">
             <h2 class="text-2xl font-extrabold mb-12 text-center text-emerald-900 uppercase tracking-widest">Nuestra Colección</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
                 <div class="reveal group cursor-pointer" onclick="openProduct('Matcha Terciopelo', 'Grado Ceremonial', 'Nuestro Matcha de grado ceremonial ofrece un aporte nutricional y antioxidante diez veces mayor que una infusión convencional.', 'matcha-product.jpg')">
-                    <div class="img-github-placeholder aspect-[4/5] mb-4 group-hover:border-rosa group-hover:border-solid">
-                        <img src="matcha-product.jpg" alt="Matcha Terciopelo" class="parallax-layer" data-speed="0.08" onload="this.parentElement.classList.add('img-loaded')" onerror="this.style.opacity=0">
+                    <div class="img-github-placeholder aspect-[4/5] mb-4">
+                        <img src="matcha-product.jpg" alt="Matcha Terciopelo" onerror="this.style.opacity=0">
                     </div>
                     <h3 class="text-sm font-bold text-center">Matcha Terciopelo</h3>
                     <p class="text-[10px] uppercase font-bold text-rosa text-center">Grado Ceremonial</p>
                 </div>
                 <div class="reveal group cursor-pointer" style="transition-delay: 100ms;" onclick="openProduct('Rocío de Rosas', 'Floral', 'Infusión delicada de té blanco con pétalos de rosa reales y mensajes inspiradores en cada etiqueta.', 'rose-product.jpg')">
-                    <div class="img-github-placeholder aspect-[4/5] mb-4 group-hover:border-rosa group-hover:border-solid">
-                        <img src="rose-product.jpg" alt="Rocío de Rosas" class="parallax-layer" data-speed="0.06" onload="this.parentElement.classList.add('img-loaded')" onerror="this.style.opacity=0">
+                    <div class="img-github-placeholder aspect-[4/5] mb-4">
+                        <img src="rose-product.jpg" alt="Rocío de Rosas" onerror="this.style.opacity=0">
                     </div>
                     <h3 class="text-sm font-bold text-center">Rocío de Rosas</h3>
                     <p class="text-[10px] uppercase font-bold text-rosa text-center">Floral</p>
                 </div>
                 <div class="reveal group cursor-pointer" style="transition-delay: 200ms;" onclick="openProduct('Bosque Esmeralda', 'Cítrico', 'Té verde con toques de limón y verbena, presentado en nuestras icónicas bolsitas de corazón biodegradable.', 'forest-product.jpg')">
-                    <div class="img-github-placeholder aspect-[4/5] mb-4 group-hover:border-rosa group-hover:border-solid">
-                        <img src="forest-product.jpg" alt="Bosque Esmeralda" class="parallax-layer" data-speed="0.1" onload="this.parentElement.classList.add('img-loaded')" onerror="this.style.opacity=0">
+                    <div class="img-github-placeholder aspect-[4/5] mb-4">
+                        <img src="forest-product.jpg" alt="Bosque Esmeralda" onerror="this.style.opacity=0">
                     </div>
                     <h3 class="text-sm font-bold text-center">Bosque Esmeralda</h3>
                     <p class="text-[10px] uppercase font-bold text-rosa text-center">Cítrico</p>
                 </div>
                 <div class="reveal group cursor-pointer" style="transition-delay: 300ms;" onclick="openProduct('Relax Hibiscus', 'Calma', 'Infusión con hibiscus y frutos del bosque para momentos de mindfulness y calma absoluta.', 'relax-product.jpg')">
-                    <div class="img-github-placeholder aspect-[4/5] mb-4 group-hover:border-rosa group-hover:border-solid">
-                        <img src="relax-product.jpg" alt="Relax Hibiscus" class="parallax-layer" data-speed="0.07" onload="this.parentElement.classList.add('img-loaded')" onerror="this.style.opacity=0">
+                    <div class="img-github-placeholder aspect-[4/5] mb-4">
+                        <img src="relax-product.jpg" alt="Relax Hibiscus" onerror="this.style.opacity=0">
                     </div>
                     <h3 class="text-sm font-bold text-center">Relax Hibiscus</h3>
                     <p class="text-[10px] uppercase font-bold text-rosa text-center">Calma</p>
@@ -366,7 +340,7 @@
         </div>
     </section>
 
-    <!-- Gráficos de Sabor -->
+    <!-- Perfiles de Sabor -->
     <section id="sabores" class="py-24 px-6 bg-white overflow-hidden">
         <div class="max-w-6xl mx-auto">
             <div class="grid md:grid-cols-2 gap-16 items-center">
@@ -374,7 +348,7 @@
                     <h2 class="text-3xl font-extrabold mb-6 uppercase tracking-widest">Perfiles de Sabor</h2>
                     <p class="text-sm text-emerald-900/60 mb-10">Gráfica comparativa de nuestras mezclas de autor.</p>
                     <div class="grid grid-cols-1 gap-2">
-                        <button class="flavor-selector active text-left p-4 rounded-xl border border-emerald-900 transition-all text-xs font-bold" data-flavor="matcha">MATCHA TERCIOPELO</button>
+                        <button class="flavor-selector active text-left p-4 rounded-xl border border-gray-100 transition-all text-xs font-bold" data-flavor="matcha">MATCHA TERCIOPELO</button>
                         <button class="flavor-selector text-left p-4 rounded-xl border border-gray-100 transition-all text-xs font-bold" data-flavor="rosas">ROCÍO DE ROSAS</button>
                         <button class="flavor-selector text-left p-4 rounded-xl border border-gray-100 transition-all text-xs font-bold" data-flavor="bosque">BOSQUE ESMERALDA</button>
                         <button class="flavor-selector text-left p-4 rounded-xl border border-gray-100 transition-all text-xs font-bold" data-flavor="relax">RELAX HIBISCUS</button>
@@ -387,260 +361,297 @@
         </div>
     </section>
 
-    <!-- Sección Origen -->
+    <!-- Origen del Té -->
     <section id="raiz" class="py-24 px-6 bg-[#2D5A27] text-white overflow-hidden">
-        <div class="max-w-5xl mx-auto reveal">
-            <h2 class="text-3xl font-extrabold mb-10 text-center uppercase tracking-widest leading-tight">Origen del Té: Historia, Tradición y el Ritual que Conquistó el Mundo</h2>
+        <div class="max-w-4xl mx-auto reveal">
+            <h2 class="text-3xl font-extrabold mb-12 text-center uppercase tracking-widest leading-tight">Origen del Té: Historia, Tradición y el Ritual que Conquistó el Mundo</h2>
             
-            <div class="prose-text text-sm md:text-base font-medium text-emerald-50/90 space-y-8">
-                <div class="space-y-6">
-                    <p>Hablar del origen del té es adentrarse en una historia milenaria que une naturaleza, cultura y espiritualidad. Mucho antes de convertirse en una de las bebidas más consumidas del mundo, el té ya simbolizaba sabiduría, equilibrio y conexión con la tierra.</p>
-                    <p>El té proviene de una única planta: <strong>Camellia sinensis</strong>, un arbusto originario del este de Asia cuyas hojas han dado lugar a todas las variedades que conocemos hoy — té verde, té negro, té blanco, oolong o pu-erh. Todo nace de la misma hoja. Lo que cambia es el proceso de oxidación, el clima donde crece y, sobre todo, la tradición que acompaña su recolección.</p>
+            <div class="prose-text text-sm md:text-base font-medium text-emerald-50/90 space-y-10">
+                <div class="img-github-placeholder w-full h-80 mb-12 border-white/20">
+                    <img src="origen-del-te.jpg" alt="Hojas de Camellia Sinensis en su origen" onerror="this.style.opacity=0">
                 </div>
 
-                <div class="bg-white/10 p-8 md:p-12 rounded-[2.5rem] border border-white/10 backdrop-blur-sm">
-                    <h3 class="text-rosa">La leyenda del descubrimiento: El emperador Shennong</h3>
-                    <p>La historia del té comienza en la antigua China, hace más de 4.700 años (aprox. 2737 a.C.). Según la leyenda, el emperador <strong>Shennong</strong>, considerado el padre de la medicina tradicional china y un gran impulsor de la agricultura, descubrió el té de forma accidental. </p>
-                    <p>Mientras descansaba bajo un árbol de té silvestre y hervía agua para purificarla, unas hojas cayeron por azar en su recipiente. Al probar la infusión resultante, el emperador quedó fascinado por su frescura, su aroma y su capacidad para revitalizar el cuerpo y la mente. Desde ese momento, el té pasó de ser una planta medicinal a un elemento central de la hospitalidad y la cultura asiática.</p>
-                </div>
+                <p>Hablar del origen del té es adentrarse en una historia milenaria que une naturaleza, cultura y espiritualidad. Mucho antes de convertirse en una de las bebidas más consumidas del mundo, el té ya simbolizaba sabiduría, equilibrio y conexión con la tierra.</p>
+                <p>El té proviene de una única planta: Camellia sinensis, un arbusto originario del este de Asia cuyas hojas han dado lugar a todas las variedades que conocemos hoy — té verde, té negro, té blanco, oolong o pu-erh. Todo nace de la misma hoja. Lo que cambia es el proceso, el tiempo y la tradición que la acompaña.</p>
 
-                <div class="grid md:grid-cols-2 gap-12 items-start pt-8">
-                    <div class="space-y-6">
-                        <h3 class="text-rosa">La expansión por el mundo</h3>
-                        <p>En <strong>Japón</strong>, fueron los monjes budistas quienes lo introdujeron en el siglo IX tras sus viajes a China. Allí el té adquirió un significado espiritual profundo, dando lugar a la famosa <strong>Ceremonia del Té (Cha-no-yu)</strong>, donde el Matcha es el protagonista absoluto.</p>
-                        <p>Siglos más tarde, en el XVII, el té llegó a <strong>Europa</strong> a través de los barcos de la Compañía Holandesa de las Indias Orientales. Rápidamente se convirtió en el producto estrella de la nobleza, especialmente en Inglaterra, donde la "Hora del Té" se transformó en un pilar social inamovible.</p>
-                    </div>
-                    <div class="space-y-8">
-                        <div class="img-github-placeholder aspect-video rounded-3xl overflow-hidden shadow-lg border-none">
-                            <img src="camellia-sinensis.jpg" alt="Camellia Sinensis" class="parallax-layer" data-speed="0.12" onload="this.parentElement.classList.add('img-loaded')" onerror="this.style.opacity=0">
-                        </div>
-                        <div class="bg-white/5 p-6 rounded-2xl border border-white/10 italic text-sm">
-                            "El té es mucho más que una bebida; es un puente entre el hombre y la naturaleza, una invitación a detener el tiempo en un mundo que nunca descansa."
-                        </div>
-                    </div>
-                </div>
+                <h3 class="text-rosa">La leyenda del descubrimiento del té</h3>
+                <p>La historia del té comienza en la antigua China, hace más de 4.000 años. Según la tradición, el emperador Shennong, considerado el padre de la medicina tradicional china, descubrió el té de forma accidental cuando unas hojas cayeron en el agua que estaba hirviendo.</p>
+                <p>Al probar aquella infusión aromática, experimentó una sensación revitalizante y clara. Ese momento marcó el inicio simbólico del consumo del té.</p>
+
+                <h3 class="text-rosa">La expansión del té por el mundo</h3>
+                <p>Desde China, el té comenzó a viajar. En Japón, fueron los monjes budistas quienes lo introdujeron en el siglo IX. Allí el té adquirió un significado espiritual. La ceremonia japonesa del té se convirtió en una práctica de armonía, respeto y atención plena.</p>
+                <p>Siglos después, el té llegó a Europa a través de las rutas comerciales marítimas. En Reino Unido, se integró profundamente en la cultura cotidiana, especialmente tras popularizarse en la corte gracias a Catalina de Braganza.</p>
+
+                <h3 class="text-rosa">Usos y Simbolismo</h3>
+                <p>En sus orígenes, el té era considerado una planta medicinal. Con el paso del tiempo, el té también adquirió un valor espiritual. Beber té se convirtió en un ritual consciente, donde cada gesto tenía significado. Además, el té siempre ha sido un símbolo de hospitalidad.</p>
             </div>
         </div>
     </section>
 
-    <!-- Sección Matcha vs Té -->
-    <section id="comparativa" class="py-24 px-6 bg-white overflow-hidden">
-        <div class="max-w-6xl mx-auto reveal">
-            <h2 class="text-center text-3xl font-extrabold mb-16 uppercase tracking-widest leading-tight text-emerald-900">Diferencias entre Matcha y el té en bolsitas de Infucor</h2>
+    <!-- Matcha vs Té en Bolsitas -->
+    <section id="comparativa" class="py-24 px-6 bg-white overflow-hidden border-b border-gray-50">
+        <div class="max-w-4xl mx-auto reveal">
+            <h2 class="text-3xl font-extrabold mb-12 text-center uppercase tracking-widest text-emerald-900 leading-tight">Matcha vs Té en Bolsitas de Infucor</h2>
             
-            <div class="grid md:grid-cols-2 gap-8 mb-16">
-                <div class="p-10 bg-pink-50/50 rounded-[2.5rem] border border-pink-100 prose-text">
-                    <h3 class="text-rosa">¿Qué es Matcha?</h3>
-                    <p class="text-sm">El <strong>Matcha</strong> es un té verde en polvo de alta calidad, originario de Japón, obtenido a partir de hojas de <strong>Camellia sinensis</strong> finamente molidas. A diferencia de otros tés, donde se infusionan las hojas y luego se descartan, en el Matcha se consume toda la hoja en forma de polvo.</p>
+            <div class="prose-text text-emerald-900/80">
+                <h3 class="text-rosa">¿Qué es Matcha?</h3>
+                <p>El Matcha es un té verde en polvo de alta calidad, originario de Japón, obtenido a partir de hojas de Camellia sinensis finamente molidas. A diferencia de otros tés, donde se infusionan las hojas y luego se descartan, en el Matcha se consume toda la hoja en forma de polvo.</p>
+                <p>Esta característica lo convierte en una bebida intensa, con un perfil sensorial y nutricional distinto al de los tés infusionados tradicionales.</p>
+
+                <h3 class="text-rosa">¿Qué es el té en bolsitas de Infucor?</h3>
+                <p>El té en bolsitas de Infucor también se elabora a partir de la planta Camellia sinensis, pero en formato de hoja troceada y empaquetada para infusión. En este caso:</p>
+                <ul class="list-disc pl-5 mb-6 space-y-2 text-sm">
+                    <li>Se infusionan las hojas en agua caliente.</li>
+                    <li>Las hojas se retiran junto con la bolsita al finalizar la preparación.</li>
+                    <li>El resultado es una taza suave y equilibrada, fácil de preparar y consistente.</li>
+                </ul>
+
+                <h3 class="text-rosa">Preparación: Matcha vs té en bolsitas</h3>
+                <h4 class="font-bold text-sm uppercase mb-4">Preparación de Matcha</h4>
+                <p>La preparación del Matcha se diferencia radicalmente de la del té en bolsitas:</p>
+                <ul class="list-disc pl-5 mb-6 space-y-2 text-sm">
+                    <li>Calentar agua: lo ideal es agua a ~80 °C (no hirviendo).</li>
+                    <li>Tamizar el polvo: se tamiza la cantidad de Matcha para evitar grumos.</li>
+                    <li>Batido: se mezcla con un batidor de bambú (chasen) o con un batidor eléctrico hasta obtener una espuma ligera.</li>
+                    <li>Consumo completo de la hoja: al beber Matcha no se descarta ningún residuo vegetal.</li>
+                </ul>
+                <p>Este método produce una bebida con cuerpo, textura aterciopelada y sabor más concentrado.</p>
+
+                <h4 class="font-bold text-sm uppercase mb-4">Preparación del té en bolsitas de Infucor</h4>
+                <p>La preparación del té en bolsitas de Infucor es más simple:</p>
+                <ul class="list-disc pl-5 mb-6 space-y-2 text-sm">
+                    <li>Hervir agua: agua a punto de ebullición.</li>
+                    <li>Colocar la bolsita en la taza o tetera.</li>
+                    <li>Verter el agua caliente sobre la bolsita.</li>
+                    <li>Tiempo de infusión: entre 3 y 5 minutos según intensidad deseada.</li>
+                    <li>Retirar la bolsita y disfrutar.</li>
+                </ul>
+                <p>Este método produce una infusión aromática, suave y equilibrada, ideal para consumo diario y rápido.</p>
+
+                <h3 class="text-rosa">Perfil sensorial</h3>
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div class="bg-pink-50/20 p-6 rounded-2xl">
+                        <h4 class="font-extrabold text-xs uppercase mb-3">Matcha</h4>
+                        <p class="text-xs"><strong>Sabor:</strong> umami intenso, herbáceo, con notas dulces y a veces ligeramente amargas.</p>
+                        <p class="text-xs"><strong>Textura:</strong> cremosa y densa, con cuerpo.</p>
+                        <p class="text-xs"><strong>Aroma:</strong> repleto de notas verdes y frescas.</p>
+                    </div>
+                    <div class="bg-emerald-50/20 p-6 rounded-2xl">
+                        <h4 class="font-extrabold text-xs uppercase mb-3">Té en bolsitas de Infucor</h4>
+                        <p class="text-xs"><strong>Sabor:</strong> suave, limpio y variable según tipo de té (verde, negro, etc.).</p>
+                        <p class="text-xs"><strong>Textura:</strong> ligera y fluida.</p>
+                        <p class="text-xs"><strong>Aroma:</strong> delicado, con matices florales o frutales según la mezcla.</p>
+                    </div>
                 </div>
-                <div class="p-10 bg-emerald-50/50 rounded-[2.5rem] border border-emerald-100 prose-text">
-                    <h3 class="text-emerald-800">¿Qué es el té en bolsitas de Infucor?</h3>
-                    <p class="text-sm">El té en bolsitas de Infucor también se elabora a partir de la planta <strong>Camellia sinensis</strong>, pero en formato de hoja troceada y empaquetada para infusión. En este caso:</p>
-                    <ul class="text-sm space-y-2 mb-4">
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-600 text-[10px]"></i> Se infusionan las hojas en agua caliente.</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-600 text-[10px]"></i> Las hojas se retiran junto con la bolsita al finalizar la preparación.</li>
-                    </ul>
+
+                <h3 class="text-rosa">Nutrientes y beneficios</h3>
+                <h4 class="font-bold text-sm uppercase mb-4">Matcha</h4>
+                <p>Al consumirse el polvo completo de la hoja, el Matcha ofrece:</p>
+                <ul class="list-disc pl-5 mb-6 space-y-2 text-sm">
+                    <li>Mayor contenido de antioxidantes (EGCG y polifenoles).</li>
+                    <li>L-teanina en mayor concentración, lo que favorece sensación de calma y enfoque.</li>
+                    <li>Contenido de cafeína más sostenido, ofreciendo energía sin picos bruscos.</li>
+                </ul>
+
+                <h4 class="font-bold text-sm uppercase mb-4">Té en bolsitas de Infucor</h4>
+                <p>La infusión proporciona beneficios clásicos del té:</p>
+                <ul class="list-disc pl-5 mb-6 space-y-2 text-sm">
+                    <li>Antioxidantes disueltos en el agua de la infusión.</li>
+                    <li>Menor aporte de cafeína por taza en comparación con Matcha.</li>
+                    <li>Sabor y experiencia variables según tipo de hoja y mezcla.</li>
+                </ul>
+
+                <h3 class="text-rosa">Experiencia de consumo</h3>
+                <h4 class="font-bold text-sm uppercase mb-4">Matcha</h4>
+                <p>Ritualizado: su preparación requiere dedicación y atención. Ideal para momentos de pausa consciente o ritual de bienestar. Se consume en porciones más pequeñas y concentradas.</p>
+                
+                <h4 class="font-bold text-sm uppercase mb-4">Té en bolsitas de Infucor</h4>
+                <p>Cotidiano y práctico: perfecto para consumo diario o en movimiento. Preparación rápida y sencilla. Versátil: se puede acompañar con leche, miel, limón o sola.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección del Ritual -->
+    <section id="ritual" class="py-24 px-6 bg-white overflow-hidden">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12 reveal">
+                <span class="text-[10px] font-extrabold uppercase tracking-[0.3em] text-rosa mb-4 block">Slow Tea Movement</span>
+                <h2 class="text-3xl font-extrabold uppercase tracking-widest leading-tight">El Ritual de la Infusión Perfecta</h2>
+            </div>
+            
+            <div class="reveal mb-16">
+                <div class="img-github-placeholder w-full aspect-video rounded-[3rem]">
+                    <img src="ritual-preparacion-te.jpg" alt="Ritual de preparación Infucor Horizontal" onerror="this.style.opacity=0">
                 </div>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="p-8 border border-emerald-900/5 rounded-3xl bg-gray-50/30">
-                    <h4 class="font-extrabold text-xs uppercase tracking-widest mb-6 border-b pb-2">Perfil Sensorial</h4>
-                    <div class="space-y-4">
-                        <div>
-                            <span class="text-[10px] font-bold text-rosa block mb-1">MATCHA</span>
-                            <p class="text-[11px] leading-relaxed">Sabor umami intenso, herbáceo, notas dulces.</p>
-                        </div>
-                        <div>
-                            <span class="text-[10px] font-bold text-emerald-800 block mb-1">INFUCOR</span>
-                            <p class="text-[11px] leading-relaxed">Sabor suave y limpio. Aroma delicado con matices florales.</p>
-                        </div>
-                    </div>
+            <div class="grid md:grid-cols-3 gap-12 max-w-5xl mx-auto reveal">
+                <div class="flex flex-col items-center text-center">
+                    <span class="text-4xl font-bold text-rosa/20 mb-4">01</span>
+                    <h4 class="font-bold uppercase text-sm mb-3">Templar el Alma</h4>
+                    <p class="text-xs text-emerald-900/60 leading-relaxed">Calienta agua filtrada a 85°C. El calor debe ser amable, nunca agresivo para las hojas.</p>
                 </div>
-
-                <div class="p-8 border border-emerald-900/5 rounded-3xl bg-gray-50/30">
-                    <h4 class="font-extrabold text-xs uppercase tracking-widest mb-6 border-b pb-2">Nutrientes</h4>
-                    <div class="space-y-4">
-                        <div>
-                            <span class="text-[10px] font-bold text-rosa block mb-1">MATCHA</span>
-                            <p class="text-[11px] leading-relaxed">Máximo contenido de antioxidantes (EGCG).</p>
-                        </div>
-                        <div>
-                            <span class="text-[10px] font-bold text-emerald-800 block mb-1">INFUCOR</span>
-                            <p class="text-[11px] leading-relaxed">Antioxidantes disueltos, menor aporte de cafeína.</p>
-                        </div>
-                    </div>
+                <div class="flex flex-col items-center text-center">
+                    <span class="text-4xl font-bold text-rosa/20 mb-4">02</span>
+                    <h4 class="font-bold uppercase text-sm mb-3">El Abrazo del Corazón</h4>
+                    <p class="text-xs text-emerald-900/60 leading-relaxed">Introduce la bolsita de corazón Infucor. Observa cómo el agua se tiñe de vida lentamente.</p>
                 </div>
-
-                <div class="p-8 border border-emerald-900/5 rounded-3xl bg-gray-50/30">
-                    <h4 class="font-extrabold text-xs uppercase tracking-widest mb-6 border-b pb-2">Experiencia</h4>
-                    <div class="space-y-4">
-                        <div>
-                            <span class="text-[10px] font-bold text-rosa block mb-1">MATCHA</span>
-                            <p class="text-[11px] leading-relaxed">Requiere dedicación. Ideal para pausas conscientes.</p>
-                        </div>
-                        <div>
-                            <span class="text-[10px] font-bold text-emerald-800 block mb-1">INFUCOR</span>
-                            <p class="text-[11px] leading-relaxed">Práctico, rápido y versátil. Perfecto para el día a día.</p>
-                        </div>
-                    </div>
+                <div class="flex flex-col items-center text-center">
+                    <span class="text-4xl font-bold text-rosa/20 mb-4">03</span>
+                    <h4 class="font-bold uppercase text-sm mb-3">La Pausa Consciente</h4>
+                    <p class="text-xs text-emerald-900/60 leading-relaxed">Espera 4 minutos. Lee el mensaje de tu etiqueta. Respira. Este momento es solo tuyo.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- El Ritual -->
-    <section id="rituales" class="py-24 px-6 bg-[#FCF9F9] overflow-hidden">
-        <div class="max-w-6xl mx-auto reveal">
-            <div class="grid md:grid-cols-2 gap-16 items-center">
-                <div class="img-github-placeholder aspect-video shadow-2xl rounded-[3rem]">
-                    <img src="utensilios-tea.jpg" alt="Utensilios del Té" class="parallax-layer" data-speed="0.1" onload="this.parentElement.classList.add('img-loaded')" onerror="this.style.opacity=0">
-                </div>
-                <div class="prose-text">
-                    <h3 class="text-emerald-800">Pausa Sagrada</h3>
-                    <p class="text-sm text-emerald-900/70">La preparación del té es una práctica de <strong>mindfulness</strong>. Desde el batido del matcha hasta el tiempo de espera de la infusión, transformamos cada sorbo en un momento de introspección.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sección de Impacto Sostenible -->
+    <!-- Impacto Ambiental -->
     <section id="sostenibilidad" class="py-24 px-6 bg-[#f8fdf8] overflow-hidden">
-        <div class="max-w-5xl mx-auto reveal">
-            <h2 class="text-3xl font-extrabold mb-12 text-center uppercase tracking-widest text-emerald-900 leading-tight">Diferencia entre las bolsas de té tradicionales y las bolsas de té hechas de maíz (PLA)</h2>
+        <div class="max-w-6xl mx-auto reveal">
+            <h2 class="text-3xl font-extrabold mb-12 text-center uppercase tracking-widest text-emerald-900 leading-tight">Impacto Ambiental: Bolsas Tradicionales vs Maíz (PLA)</h2>
             
-            <div class="prose-text text-sm md:text-base font-medium text-emerald-900/80 space-y-12">
-                <div class="max-w-4xl mx-auto space-y-6">
-                    <p>La sostenibilidad en el mundo del té es cada vez más relevante. Cuando hablamos de impacto ambiental, uno de los elementos más importantes —y menos visibles— es la bolsa de té. No todas las bolsas son iguales: los materiales, la biodegradabilidad y la posible liberación de microplásticos varían significativamente entre las bolsas de té tradicionales y las bolsas de té hechas a partir de maíz o PLA.</p>
-                    <p>Comprender la diferencia entre bolsas de té convencionales y bolsas de té biodegradables de maíz es clave para tomar decisiones más responsables.</p>
-                </div>
-
-                <div class="grid md:grid-cols-2 gap-12">
-                    <div class="space-y-6">
-                        <h3 class="text-emerald-800">De qué están hechas las bolsas de té tradicionales</h3>
-                        <p class="text-sm">Las bolsas de té tradicionales suelen fabricarse con papel filtrante derivado de pulpa de madera, fibras vegetales como abacá y, en muchos casos, sellantes sintéticos como el polipropileno.</p>
-                        <p class="text-sm">Aunque a simple vista parecen papel, muchas contienen pequeñas cantidades de plástico para permitir el termosellado. Según explica Wikipedia, el polipropileno se utiliza habitualmente como componente estructural en bolsitas de té termoselladas.</p>
-                        <p class="text-sm">Además, investigaciones publicadas en la revista Environmental Science & Technology y difundidas por National Geographic han señalado que ciertas bolsas que contienen plástico pueden liberar millones o incluso miles de millones de partículas microplásticas cuando se infusionan en agua caliente.</p>
-                        <p class="text-sm italic text-emerald-900/60">Esto plantea varios problemas asociados: posible presencia de microplásticos en la bebida, dificultad de reciclaje, degradación muy lenta y dependencia de derivados del petróleo.</p>
-                    </div>
-
-                    <div class="space-y-6 bg-emerald-900/5 p-8 rounded-[2.5rem]">
-                        <h3 class="text-rosa">Qué son las bolsas de té hechas de maíz (PLA)</h3>
-                        <p class="text-sm">Las bolsas de té hechas de maíz se fabrican normalmente con ácido poliláctico (PLA), un bioplástico obtenido mediante la fermentación del almidón vegetal, generalmente de maíz.</p>
-                        <p class="text-sm">El ácido poliláctico está descrito por Encyclopaedia Britannica como un polímero biodegradable de origen vegetal. A diferencia de los plásticos derivados del petróleo, el PLA procede de recursos renovables.</p>
-                        <p class="text-sm">Este material se utiliza ampliamente en envases compostables y en bolsitas de té piramidales o de malla fina, especialmente en marcas que apuestan por soluciones más sostenibles y por bolsas de té sin plástico.</p>
-                    </div>
-                </div>
-
-                <div class="space-y-6">
-                    <h3 class="text-emerald-800">Diferencias entre bolsas de té tradicionales y bolsas de té de maíz</h3>
-                    <p class="text-sm">La diferencia principal entre las bolsas de té tradicionales y las bolsas de té de maíz (PLA) está en el origen del material y su comportamiento ambiental.</p>
-                    <p class="text-sm">Las bolsas tradicionales pueden contener polímeros derivados del petróleo como polipropileno o nylon. En cambio, las bolsas de té de maíz provienen de biomasa vegetal renovable, lo que reduce la dependencia de combustibles fósiles.</p>
-                    <p class="text-sm">En términos de biodegradabilidad y compostabilidad, es importante entender que no todo material biodegradable se descompone en cualquier entorno. Según explica European Bioplastics, el PLA es biodegradable y compostable en condiciones industriales controladas. Esto significa que se degrada eficientemente en instalaciones de compostaje industrial, mientras que en compost doméstico puede requerir más tiempo dependiendo de la temperatura y las condiciones ambientales.</p>
-                    <p class="text-sm">Las bolsas de té tradicionales que contienen plástico pueden tardar décadas en degradarse completamente.</p>
-                    <p class="text-sm">Desde el punto de vista del impacto ambiental, las bolsas de té basadas en PLA reducen el uso de recursos fósiles y la huella de carbono asociada a plásticos convencionales. Además, si no contienen componentes sintéticos adicionales, no liberan microplásticos derivados del petróleo.</p>
-                    <p class="text-sm">En cuanto a la experiencia de infusión, las bolsas de malla de PLA permiten una mejor circulación del agua, mayor expansión de la hoja y una extracción más eficiente de aroma y sabor, lo que explica su uso frecuente en formatos piramidales de gama premium.</p>
-                </div>
-
-                <div class="bg-white/40 p-10 rounded-[2.5rem] border border-emerald-100">
-                    <h3 class="text-emerald-800">Consideraciones importantes sobre el PLA</h3>
-                    <p class="text-sm">Es fundamental comunicar con transparencia que el PLA es de origen vegetal y compostable en condiciones industriales, pero no debe confundirse con una degradación inmediata en cualquier entorno natural. Visualmente puede parecer plástico convencional, pero su base química procede de biomasa renovable y no de petróleo.</p>
-                    <p class="text-sm font-bold">La diferencia entre bolsas de té con plástico y bolsas de té biodegradables de maíz no es solo técnica, sino también ambiental. Elegir bolsas de té compostables y sin derivados fósiles es una forma concreta de reducir el impacto ambiental sin renunciar a la calidad de la infusión.</p>
-                </div>
-
-                <!-- Elemento Interactivo de la Taza -->
-                <div class="text-center py-12">
-                    <div class="impact-cup-trigger group">
-                        <div class="w-16 h-16 bg-white border-2 border-rosa rounded-full flex items-center justify-center text-rosa text-2xl shadow-sm">
-                            <i class="fas fa-coffee"></i>
-                        </div>
-                        <div class="impact-tooltip">
-                            <h4 class="text-xs font-extrabold uppercase text-rosa mb-3 tracking-widest border-b border-rosa/20 pb-2">Huella de la Competencia</h4>
-                            <ul class="space-y-2 text-[11px] font-medium leading-relaxed">
-                                <li class="flex items-start gap-2">
-                                    <i class="fas fa-microchip text-rosa mt-1"></i>
-                                    <span><strong>11.600 millones</strong> de microplásticos liberados por una sola bolsa tradicional.</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <i class="fas fa-biohazard text-rosa mt-1"></i>
-                                    <span><strong>3.100 millones</strong> de nanoplásticos que pueden ser absorbidos.</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <i class="fas fa-trash-alt text-rosa mt-1"></i>
-                                    <span>Hasta <strong>100 años</strong> para que el sellado se degrade.</span>
-                                </li>
-                            </ul>
+            <div class="flex justify-center mb-16">
+                <div class="tea-cup-container">
+                    <svg class="tea-cup-svg w-64 h-64" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M40 60H160V120C160 142.091 142.091 160 120 160H80C57.9086 160 40 142.091 40 120V60Z" stroke="#2D5A27" stroke-width="8"/>
+                        <path d="M160 80H175C186.046 80 195 88.9543 195 100V110C195 121.046 186.046 130 175 130H160" stroke="#2D5A27" stroke-width="8"/>
+                        <path d="M70 40C70 40 75 30 85 30C95 30 100 40 100 40" stroke="#FFB7C5" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M110 40C110 40 115 30 125 30C135 30 140 40 140 40" stroke="#FFB7C5" stroke-width="4" stroke-linecap="round"/>
+                        <rect x="90" y="80" width="20" height="25" rx="10" fill="#FFB7C5" opacity="0.4"/>
+                    </svg>
+                    <div class="info-card">
+                        <h4 class="text-xs font-extrabold uppercase text-emerald-900 mb-2">Bolsa de Té Tradicional</h4>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-end">
+                                <span class="text-[9px] font-bold text-emerald-900/40 uppercase">Microplásticos</span>
+                                <span class="text-sm font-extrabold text-red-500">11.600 Millones</span>
+                            </div>
+                            <div class="flex justify-between items-end">
+                                <span class="text-[9px] font-bold text-emerald-900/40 uppercase">Nanoplásticos</span>
+                                <span class="text-sm font-extrabold text-red-500">3.100 Millones</span>
+                            </div>
+                            <p class="text-[9px] italic text-emerald-900/60 mt-2 border-t pt-2">Datos por taza al usar bolsas con sellantes plásticos (Nylon/Polipropileno).</p>
                         </div>
                     </div>
-                    <p class="text-[10px] font-extrabold uppercase tracking-[0.2em] text-emerald-900/40 mt-4">Pasa el ratón sobre la taza para ver la realidad</p>
+                </div>
+            </div>
+
+            <div class="prose-text space-y-12">
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div class="bg-white p-10 rounded-[2.5rem] border border-gray-100 shadow-sm">
+                        <h3 class="text-emerald-800">Bolsas Tradicionales</h3>
+                        <p class="text-sm">Suelen fabricarse con papel filtrante pero, para permitir el termosellado, muchas marcas añaden <strong>polipropileno</strong>. Investigaciones difundidas por <em>National Geographic</em> señalan que esto libera microplásticos que ingerimos inadvertidamente.</p>
+                    </div>
+                    <div class="bg-emerald-50/50 p-10 rounded-[2.5rem] border border-emerald-100 shadow-sm">
+                        <h3 class="text-emerald-900">Bolsas de Maíz (PLA)</h3>
+                        <p class="text-sm">Fabricadas con <strong>Ácido Poliláctico (PLA)</strong>, un bioplástico obtenido mediante la fermentación de almidón de maíz. Descrito por <em>Britannica</em> como un polímero biodegradable de origen vegetal que procede de recursos 100% renovables.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-rosa/20 p-10 rounded-[3rem] text-center">
+                    <h3 class="text-rosa mb-6">Consideraciones sobre la Compostabilidad</h3>
+                    <p class="text-sm max-w-3xl mx-auto">Según <em>European Bioplastics</em>, el PLA es biodegradable y compostable en condiciones industriales. En casa, su degradación puede ser más lenta, pero a diferencia del nylon tradicional, no dejará rastro de microplásticos fósiles en la tierra.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Comunidad Infucor -->
+    <!-- Comunidad Infucor (Opiniones) -->
     <section id="comunidad" class="py-24 px-6 bg-white overflow-hidden">
-        <div class="max-w-6xl mx-auto reveal">
-            <h2 class="text-3xl font-extrabold mb-16 text-center uppercase tracking-widest text-emerald-900">Comunidad Infucor</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-extrabold mb-12 text-center uppercase tracking-widest text-emerald-900">Comunidad Infucor</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Opinión 1 -->
-                <div class="opinion-card p-10 rounded-[2.5rem]">
-                    <div class="flex text-rosa mb-6 text-[10px]"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                    <p class="text-sm text-emerald-900/80 leading-relaxed italic mb-8">“Me encanta cómo saben los tés de Infucor. Se nota la calidad y aprecio que las bolsitas sean de fibra de maíz.”</p>
-                    <p class="text-xs font-extrabold uppercase tracking-widest text-emerald-900">Laura, Madrid</p>
+                <div class="opinion-card reveal rounded-3xl">
+                    <p class="text-sm text-emerald-900/80 mb-6 leading-relaxed">“Me encanta cómo saben los tés de Infucor. Se nota la calidad desde el primer sorbo y, sobre todo, aprecio que las bolsitas sean de fibra de maíz sin plásticos. Es un pequeño detalle que marca una gran diferencia.”</p>
+                    <p class="text-xs font-extrabold uppercase tracking-widest text-rosa">— Laura, Madrid</p>
                 </div>
                 <!-- Opinión 2 -->
-                <div class="opinion-card p-10 rounded-[2.5rem]">
-                    <div class="flex text-rosa mb-6 text-[10px]"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                    <p class="text-sm text-emerald-900/80 leading-relaxed italic mb-8">“Las bolsitas de corazón son un detalle precioso. Es el regalo perfecto para alguien que valora lo ecológico y lo estético.”</p>
-                    <p class="text-xs font-extrabold uppercase tracking-widest text-emerald-900">Javier, Barcelona</p>
+                <div class="opinion-card reveal rounded-3xl" style="transition-delay: 100ms;">
+                    <p class="text-sm text-emerald-900/80 mb-6 leading-relaxed">“He probado muchos tés en bolsitas y los de Infucor tienen un sabor mucho más limpio y natural. Además, me gusta saber que no estoy dejando microplásticos en mi taza. Repetiré seguro.”</p>
+                    <p class="text-xs font-extrabold uppercase tracking-widest text-rosa">— Marcos, Valencia</p>
                 </div>
                 <!-- Opinión 3 -->
-                <div class="opinion-card p-10 rounded-[2.5rem]">
-                    <div class="flex text-rosa mb-6 text-[10px]"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                    <p class="text-sm text-emerald-900/80 leading-relaxed italic mb-8">“El Matcha Terciopelo es, sin duda, el mejor que he probado. Su sabor es suave y nada amargo.”</p>
-                    <p class="text-xs font-extrabold uppercase tracking-widest text-emerald-900">Elena, Valencia</p>
+                <div class="opinion-card reveal rounded-3xl" style="transition-delay: 200ms;">
+                    <p class="text-sm text-emerald-900/80 mb-6 leading-relaxed">“Soy fan del té verde y el matcha de Infucor me sorprendió. Tiene cuerpo, aroma y una sensación en boca más intensa que otras marcas que he probado antes. Y el hecho de que las bolsitas sean compostables es un punto extra.”</p>
+                    <p class="text-xs font-extrabold uppercase tracking-widest text-rosa">— Carla, Barcelona</p>
                 </div>
                 <!-- Opinión 4 -->
-                <div class="opinion-card p-10 rounded-[2.5rem]">
-                    <div class="flex text-rosa mb-6 text-[10px]"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                    <p class="text-sm text-emerald-900/80 leading-relaxed italic mb-8">“Saber que no estoy bebiendo microplásticos me da mucha tranquilidad. El sabor del té blanco es exquisito.”</p>
-                    <p class="text-xs font-extrabold uppercase tracking-widest text-emerald-900">Sofía, Sevilla</p>
+                <div class="opinion-card reveal rounded-3xl">
+                    <p class="text-sm text-emerald-900/80 mb-6 leading-relaxed">“Compré Infucor por curiosidad y ahora es mi té de cada día. Se infusiona muy bien, el sabor es equilibrado y no deja ese regusto artificial que a veces tienen otras bolsitas. Ideal para empezar el día.”</p>
+                    <p class="text-xs font-extrabold uppercase tracking-widest text-rosa">— Andrés, Sevilla</p>
+                </div>
+                <!-- Opinión 5 -->
+                <div class="opinion-card reveal rounded-3xl" style="transition-delay: 100ms;">
+                    <p class="text-sm text-emerald-900/80 mb-6 leading-relaxed">“Valoro mucho las marcas que apuestan por el medio ambiente, y con Infucor eso se nota desde el empaque hasta el producto en sí. Las bolsitas tienen forma de corazón y además son biodegradables, lo que me hace sentir bien cada vez que preparo una taza.”</p>
+                    <p class="text-xs font-extrabold uppercase tracking-widest text-rosa">— Eva, Bilbao</p>
+                </div>
+                <!-- Opinión 6 -->
+                <div class="opinion-card reveal rounded-3xl" style="transition-delay: 200ms;">
+                    <p class="text-sm text-emerald-900/80 mb-6 leading-relaxed">“Me sorprendió gratamente la gama de sabores de Infucor. Todos tienen un perfil aromático definido y auténtico. Además, me quedé con la tranquilidad de que no hay químicos ni plásticos en las bolsitas.”</p>
+                    <p class="text-xs font-extrabold uppercase tracking-widest text-rosa">— Daniel, Zaragoza</p>
+                </div>
+                <!-- Opinión 7 -->
+                <div class="opinion-card reveal rounded-3xl">
+                    <p class="text-sm text-emerald-900/80 mb-6 leading-relaxed">“Mi experiencia con el matcha ha sido muy buena. Se mezcla fácilmente, no tiene grumos y el sabor es suave pero lleno de matices. Definitivamente una de las mejores opciones que he encontrado en té de calidad.”</p>
+                    <p class="text-xs font-extrabold uppercase tracking-widest text-rosa">— Sara, Málaga</p>
+                </div>
+                <!-- Opinión 8 -->
+                <div class="opinion-card reveal rounded-3xl" style="transition-delay: 100ms;">
+                    <p class="text-sm text-emerald-900/80 mb-6 leading-relaxed">“El té de Infucor es mi compañero infalible en las mañanas. No solo me gusta por el sabor, también por la filosofía detrás del producto: ingredientes naturales, sostenibilidad y presentación cuidada.”</p>
+                    <p class="text-xs font-extrabold uppercase tracking-widest text-rosa">— Javier, Alicante</p>
+                </div>
+                <!-- Opinión 9 -->
+                <div class="opinion-card reveal rounded-3xl" style="transition-delay: 200ms;">
+                    <p class="text-sm text-emerald-900/80 mb-6 leading-relaxed">“Me gusta preparar varias tazas al día y con Infucor siento que tengo un producto confiable y respetuoso con el medio ambiente. El diseño de las bolsitas en forma de corazón también le da un toque especial.”</p>
+                    <p class="text-xs font-extrabold uppercase tracking-widest text-rosa">— Noelia, Granada</p>
+                </div>
+                <!-- Opinión 10 -->
+                <div class="opinion-card reveal rounded-3xl lg:col-start-2">
+                    <p class="text-sm text-emerald-900/80 mb-6 leading-relaxed">“Recomiendo Infucor a todos mis amigos. Se nota que hay una intención real por ofrecer un té de calidad y al mismo tiempo cuidar el planeta. Para mí, eso vale más que cualquier etiqueta de moda.”</p>
+                    <p class="text-xs font-extrabold uppercase tracking-widest text-rosa">— Pablo, San Sebastián</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-16 px-6 bg-[#1e3d1a] border-t border-white/10 text-white">
+    <footer class="py-20 px-6 bg-[#1e3d1a] border-t border-white/5 text-white">
         <div class="max-w-6xl mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left items-start">
-                <div class="flex flex-col items-center md:items-start">
-                    <div class="text-2xl font-extrabold tracking-[0.4em] uppercase mb-4">Infucor</div>
-                    <p class="text-[11px] text-white/60 font-medium leading-relaxed max-w-[200px]">
-                        Boutique de tés ecológicos y rituales de bienestar.
-                    </p>
-                    <div class="mt-6 flex flex-col space-y-1 items-center md:items-start">
-                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-rosa">Contacto</span>
-                        <a href="mailto:infucor@gmail.com" class="text-[11px] font-bold hover:text-rosa transition-colors">infucor@gmail.com</a>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left mb-16">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="text-2xl font-extrabold tracking-[0.4em] uppercase mb-6">Infucor</div>
+                    <p class="text-xs text-white/50 max-w-sm leading-relaxed mb-8">La primera boutique de tés especializada en el bienestar emocional y la salud del ecosistema. Redefinimos el ritual del té combinando artesanía, sostenibilidad y pureza orgánica en cada corazón.</p>
+                    <div class="flex space-x-4 justify-center md:justify-start">
+                        <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-rosa hover:border-rosa transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-rosa hover:border-rosa transition-colors"><i class="fab fa-tiktok"></i></a>
                     </div>
                 </div>
-                <div class="flex flex-col space-y-3">
-                    <h4 class="text-[10px] font-extrabold uppercase tracking-widest text-rosa mb-2">Legal</h4>
-                    <a href="#" class="text-[11px] hover:text-rosa transition-colors font-bold uppercase tracking-wider">Aviso Legal</a>
-                    <a href="#" class="text-[11px] hover:text-rosa transition-colors font-bold uppercase tracking-wider">Política de Privacidad</a>
-                    <a href="#" class="text-[11px] hover:text-rosa transition-colors font-bold uppercase tracking-wider">Política de Cookies</a>
-                    <a href="#" class="text-[11px] hover:text-rosa transition-colors font-bold uppercase tracking-wider">Términos y Condiciones</a>
-                    <a href="#" class="text-[11px] hover:text-rosa transition-colors font-bold uppercase tracking-wider">Envíos y Devoluciones</a>
+                <div>
+                    <h4 class="text-[10px] font-extrabold uppercase tracking-widest text-rosa mb-6">Nuestra Boutique</h4>
+                    <ul class="space-y-4">
+                        <li><a href="#coleccion" class="text-[11px] font-bold uppercase tracking-wider text-white/70 hover:text-white transition-colors">Colección</a></li>
+                        <li><a href="#sabores" class="text-[11px] font-bold uppercase tracking-wider text-white/70 hover:text-white transition-colors">Notas de Cata</a></li>
+                    </ul>
                 </div>
-                <div class="flex flex-col items-center md:items-end space-y-4">
-                    <div class="flex space-x-4 text-lg">
-                        <a href="#" class="hover:text-rosa transition-colors"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="hover:text-rosa transition-colors"><i class="fab fa-facebook-f"></i></a>
-                    </div>
-                    <p class="text-[9px] text-white/40 font-bold uppercase tracking-[0.2em]">
-                        &copy; 2026 Infucor Boutique.
-                    </p>
+                <div>
+                    <h4 class="text-[10px] font-extrabold uppercase tracking-widest text-rosa mb-6">Atención & Legal</h4>
+                    <ul class="space-y-4 text-[11px] font-bold uppercase tracking-wider text-white/70">
+                        <li>Aviso Legal</li>
+                        <li>Política de Privacidad</li>
+                        <li>Política de Cookies</li>
+                        <li>Términos y Condiciones</li>
+                        <li>Envíos y Devoluciones</li>
+                        <li class="pt-2 text-rosa">Contacto: infucor@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[9px] text-white/30 font-bold uppercase tracking-[0.2em]">
+                <p>&copy; 2026 Infucor Boutique de Té Ecológica.</p>
+                <div class="flex items-center space-x-2">
+                    <span>Handcrafted with</span>
+                    <i class="fas fa-heart text-rosa"></i>
+                    <span>for the planet</span>
                 </div>
             </div>
         </div>
@@ -648,29 +659,34 @@
 
     <script>
         let cart = [];
+        let flavorChart;
+        
+        const flavorData = {
+            matcha: [9, 3, 8, 2, 9],
+            rosas: [3, 10, 4, 8, 3],
+            bosque: [6, 4, 10, 4, 6],
+            relax: [2, 5, 2, 9, 7]
+        };
 
-        // Función Parallax Optimizada para no romper encuadres
-        function updateParallax() {
-            const scrollY = window.pageYOffset;
-            const viewportHeight = window.innerHeight;
-            
-            document.querySelectorAll('.parallax-layer').forEach(layer => {
-                const speed = parseFloat(layer.getAttribute('data-speed')) || 0;
-                const parent = layer.closest('section') || layer.closest('header');
-                const parentRect = parent.getBoundingClientRect();
-                
-                if (parentRect.top < viewportHeight && parentRect.bottom > 0) {
-                    // Calculamos la posición relativa del scroll respecto al centro del elemento
-                    const elementCenter = parentRect.top + parentRect.height / 2;
-                    const viewportCenter = viewportHeight / 2;
-                    const distance = elementCenter - viewportCenter;
-                    
-                    // Limitamos el movimiento para que la imagen siempre cubra el contenedor (scale 1.1)
-                    // Multiplicamos por la velocidad deseada
-                    const translateVal = distance * speed;
-                    
-                    // Aplicamos el movimiento manteniendo el escalado para seguridad
-                    layer.style.transform = `scale(1.1) translateY(${translateVal}px)`;
+        function initCharts() {
+            const ctxFlavor = document.getElementById('flavorChart').getContext('2d');
+            flavorChart = new Chart(ctxFlavor, {
+                type: 'radar',
+                data: {
+                    labels: ['UMAMI', 'FLORAL', 'HERBAL', 'DULZOR', 'CUERPO'],
+                    datasets: [{
+                        data: flavorData.matcha,
+                        backgroundColor: 'rgba(255, 183, 197, 0.3)',
+                        borderColor: '#FFB7C5',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#FFB7C5'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { r: { grid: { color: 'rgba(45, 90, 39, 0.1)' }, ticks: { display: false }, min: 0, max: 10 } },
+                    plugins: { legend: { display: false } }
                 }
             });
         }
@@ -689,104 +705,41 @@
             document.body.style.overflow = 'auto';
         }
 
-        function addToCartFromModal() {
-            const title = document.getElementById('modal-title').innerText;
-            const img = document.getElementById('modal-img').src;
-            addToCart(title, 24.90, img);
-            closeProductModal();
-            openCartOverlay();
-        }
-
-        function addToCart(name, price, image) {
-            const existing = cart.find(item => item.name === name);
-            if(existing) {
-                existing.qty++;
-            } else {
-                cart.push({ name, price, image, qty: 1 });
-            }
-            updateCartUI();
-        }
-
         function updateCartUI() {
             const container = document.getElementById('cart-items');
             const count = document.getElementById('cart-count');
             const total = document.getElementById('cart-total');
             const emptyMsg = document.getElementById('empty-cart-msg');
-
             container.innerHTML = '';
-            let sum = 0;
-            let totalItems = 0;
-
-            if(cart.length === 0) {
-                if(emptyMsg) container.appendChild(emptyMsg);
-            } else {
+            let sum = 0, totalItems = 0;
+            if(cart.length === 0) { if(emptyMsg) container.appendChild(emptyMsg); }
+            else {
                 cart.forEach(item => {
                     sum += item.price * item.qty;
                     totalItems += item.qty;
                     const el = document.createElement('div');
                     el.className = 'flex items-center gap-4';
-                    el.innerHTML = `
-                        <div class="w-16 h-16 rounded-xl bg-gray-100 overflow-hidden shrink-0"><img src="${item.image}" class="w-full h-full object-cover"></div>
-                        <div class="flex-grow"><h4 class="text-[11px] font-bold uppercase">${item.name}</h4><p class="text-[10px]">${item.qty} x ${item.price.toFixed(2)}€</p></div>
-                    `;
+                    el.innerHTML = `<div class="w-16 h-16 rounded-xl bg-gray-100 overflow-hidden shrink-0"><img src="${item.image}" class="w-full h-full object-cover"></div><div class="flex-grow"><h4 class="text-[11px] font-bold uppercase">${item.name}</h4><p class="text-[10px]">${item.qty} x ${item.price.toFixed(2)}€</p></div>`;
                     container.appendChild(el);
                 });
             }
-
             count.innerText = totalItems;
             total.innerText = sum.toFixed(2) + '€';
         }
 
-        function openCartOverlay() {
+        function addToCart(name, price, image) {
+            const existing = cart.find(item => item.name === name);
+            if(existing) existing.qty++;
+            else cart.push({ name, price, image, qty: 1 });
+            updateCartUI();
+        }
+
+        function addToCartFromModal() {
+            const title = document.getElementById('modal-title').innerText;
+            const img = document.getElementById('modal-img').src;
+            addToCart(title, 24.90, img);
+            closeProductModal();
             document.getElementById('cart-overlay').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeCartOverlay() {
-            document.getElementById('cart-overlay').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        function checkout() {
-            if(cart.length === 0) return;
-            alert('¡Gracias por tu pedido!');
-        }
-
-        document.getElementById('open-menu').onclick = () => { document.getElementById('menu-overlay').classList.add('active'); };
-        document.getElementById('close-menu').onclick = () => { document.getElementById('menu-overlay').classList.remove('active'); };
-        document.getElementById('open-cart').onclick = openCartOverlay;
-        document.getElementById('close-cart').onclick = closeCartOverlay;
-
-        let flavorChart;
-        const flavorData = {
-            matcha: [9, 3, 8, 2, 9],
-            rosas: [3, 10, 4, 8, 3],
-            bosque: [6, 4, 10, 4, 6],
-            relax: [2, 5, 2, 9, 7]
-        };
-
-        function initChart() {
-            const canvas = document.getElementById('flavorChart');
-            if(!canvas) return;
-            const ctx = canvas.getContext('2d');
-            flavorChart = new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: ['UMAMI', 'FLORAL', 'HERBAL', 'DULZOR', 'CUERPO'],
-                    datasets: [{
-                        data: flavorData.matcha,
-                        backgroundColor: 'rgba(255, 183, 197, 0.3)',
-                        borderColor: '#FFB7C5',
-                        borderWidth: 2
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: { r: { grid: { color: 'rgba(45, 90, 39, 0.1)' }, ticks: { display: false }, min: 0, max: 10 } },
-                    plugins: { legend: { display: false } }
-                }
-            });
         }
 
         function handleReveal() {
@@ -795,18 +748,25 @@
             });
         }
 
-        window.addEventListener('scroll', () => {
-            requestAnimationFrame(() => {
-                handleReveal();
-                updateParallax();
+        document.getElementById('open-menu').onclick = () => document.getElementById('menu-overlay').classList.add('active');
+        document.getElementById('close-menu').onclick = () => document.getElementById('menu-overlay').classList.remove('active');
+        document.getElementById('open-cart').onclick = () => document.getElementById('cart-overlay').classList.add('active');
+        document.getElementById('close-cart').onclick = () => document.getElementById('cart-overlay').classList.remove('active');
+
+        document.querySelectorAll('.flavor-selector').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.flavor-selector').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                flavorChart.data.datasets[0].data = flavorData[this.getAttribute('data-flavor')];
+                flavorChart.update();
             });
-        }, { passive: true });
-        
-        window.onload = () => { 
-            initChart(); 
+        });
+
+        window.addEventListener('scroll', handleReveal);
+        window.addEventListener('load', () => { 
+            initCharts(); 
             handleReveal();
-            updateParallax();
-        };
+        });
     </script>
 </body>
 </html>
