@@ -29,9 +29,32 @@
             overflow: hidden;
         }
 
+        /* Corrección del efecto parallax para evitar que las imágenes se desnuquen del encuadre */
         .parallax-layer {
             will-change: transform;
-            transition: transform 0.05s linear;
+            transition: transform 0.1s ease-out;
+        }
+        
+        /* Asegurar que el contenedor recorte cualquier exceso de movimiento de la imagen */
+        .img-github-placeholder {
+            background-color: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1.5rem;
+            position: relative;
+            overflow: hidden; /* Mantiene la imagen dentro */
+            border: 2px dashed #d1d5db;
+            transition: all 0.3s ease;
+        }
+
+        /* Estilo base de la imagen para permitir movimiento sin salirse */
+        .img-github-placeholder img {
+            width: 100%;
+            height: 100%; 
+            object-fit: cover;
+            display: block;
+            transform: scale(1.1); /* Ligero aumento para dar margen al movimiento parallax */
         }
 
         .header-fixed {
@@ -97,28 +120,6 @@
 
         section {
             background-color: transparent;
-        }
-
-        .img-github-placeholder {
-            background-color: #f3f4f6;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 1.5rem;
-            position: relative;
-            overflow: hidden;
-            border: 2px dashed #d1d5db;
-            transition: all 0.3s ease;
-        }
-
-        .img-github-placeholder img {
-            width: 100%;
-            height: 110%; 
-            object-fit: cover;
-            display: block;
-            position: absolute;
-            top: -5%;
-            left: 0;
         }
 
         .img-loaded { border: none !important; }
@@ -316,7 +317,7 @@
 
     <!-- Hero Section -->
     <header class="pt-40 pb-24 px-6 text-center bg-white relative overflow-hidden">
-        <div class="max-w-3xl mx-auto reveal active z-10 relative parallax-layer" data-speed="0.15">
+        <div class="max-w-3xl mx-auto reveal active z-10 relative">
             <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">Amor en cada infusión.</h1>
             <p class="text-md text-emerald-900/60 mb-10 max-w-xl mx-auto font-medium">
                 Descubre un té que cuida de ti y del planeta. Bolsitas en forma de corazón hechas de fibra de maíz, abacá y sin rastro de microplásticos.
@@ -379,7 +380,7 @@
                         <button class="flavor-selector text-left p-4 rounded-xl border border-gray-100 transition-all text-xs font-bold" data-flavor="relax">RELAX HIBISCUS</button>
                     </div>
                 </div>
-                <div class="reveal bg-pink-50/30 p-8 rounded-[2rem] border border-pink-50 h-[350px] parallax-layer" data-speed="-0.05">
+                <div class="reveal bg-pink-50/30 p-8 rounded-[2rem] border border-pink-50 h-[350px]">
                     <canvas id="flavorChart"></canvas>
                 </div>
             </div>
@@ -397,7 +398,7 @@
                     <p>El té proviene de una única planta: <strong>Camellia sinensis</strong>, un arbusto originario del este de Asia cuyas hojas han dado lugar a todas las variedades que conocemos hoy — té verde, té negro, té blanco, oolong o pu-erh. Todo nace de la misma hoja. Lo que cambia es el proceso de oxidación, el clima donde crece y, sobre todo, la tradición que acompaña su recolección.</p>
                 </div>
 
-                <div class="bg-white/10 p-8 md:p-12 rounded-[2.5rem] border border-white/10 backdrop-blur-sm parallax-layer" data-speed="0.04">
+                <div class="bg-white/10 p-8 md:p-12 rounded-[2.5rem] border border-white/10 backdrop-blur-sm">
                     <h3 class="text-rosa">La leyenda del descubrimiento: El emperador Shennong</h3>
                     <p>La historia del té comienza en la antigua China, hace más de 4.700 años (aprox. 2737 a.C.). Según la leyenda, el emperador <strong>Shennong</strong>, considerado el padre de la medicina tradicional china y un gran impulsor de la agricultura, descubrió el té de forma accidental. </p>
                     <p>Mientras descansaba bajo un árbol de té silvestre y hervía agua para purificarla, unas hojas cayeron por azar en su recipiente. Al probar la infusión resultante, el emperador quedó fascinado por su frescura, su aroma y su capacidad para revitalizar el cuerpo y la mente. Desde ese momento, el té pasó de ser una planta medicinal a un elemento central de la hospitalidad y la cultura asiática.</p>
@@ -648,6 +649,7 @@
     <script>
         let cart = [];
 
+        // Función Parallax Optimizada para no romper encuadres
         function updateParallax() {
             const scrollY = window.pageYOffset;
             const viewportHeight = window.innerHeight;
@@ -658,9 +660,17 @@
                 const parentRect = parent.getBoundingClientRect();
                 
                 if (parentRect.top < viewportHeight && parentRect.bottom > 0) {
-                    const centerOffset = parentRect.top - (viewportHeight / 2) + (parentRect.height / 2);
-                    const translateVal = centerOffset * speed;
-                    layer.style.transform = `translateY(${translateVal}px)`;
+                    // Calculamos la posición relativa del scroll respecto al centro del elemento
+                    const elementCenter = parentRect.top + parentRect.height / 2;
+                    const viewportCenter = viewportHeight / 2;
+                    const distance = elementCenter - viewportCenter;
+                    
+                    // Limitamos el movimiento para que la imagen siempre cubra el contenedor (scale 1.1)
+                    // Multiplicamos por la velocidad deseada
+                    const translateVal = distance * speed;
+                    
+                    // Aplicamos el movimiento manteniendo el escalado para seguridad
+                    layer.style.transform = `scale(1.1) translateY(${translateVal}px)`;
                 }
             });
         }
