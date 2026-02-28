@@ -32,7 +32,8 @@
             border-radius: 1.5rem;
             position: relative;
             overflow: hidden; 
-            border: 2px dashed #d1d5db;
+            border: 1px solid rgba(45, 90, 39, 0.1);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .img-github-placeholder img {
@@ -40,6 +41,15 @@
             height: 100%; 
             object-fit: cover;
             display: block;
+        }
+
+        /* Mejora de marco para colección */
+        .collection-frame {
+            border-radius: 2rem;
+            padding: 0.5rem;
+            background: white;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05);
+            border: 1px solid rgba(45, 90, 39, 0.05);
         }
 
         .header-fixed {
@@ -219,6 +229,20 @@
             border-color: var(--rosa);
             transform: translateY(-5px);
         }
+
+        /* Estilos específicos para la comparativa visual */
+        .comparison-card {
+            background: white;
+            border-radius: 2.5rem;
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+            border: 1px solid rgba(45, 90, 39, 0.05);
+            height: 100%;
+            transition: transform 0.3s ease;
+        }
+        .comparison-card:hover {
+            transform: translateY(-5px);
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -309,32 +333,40 @@
             <h2 class="text-2xl font-extrabold mb-12 text-center text-emerald-900 uppercase tracking-widest">Nuestra Colección</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
                 <div class="reveal group cursor-pointer" onclick="openProduct('Matcha Terciopelo', 'Grado Ceremonial', 'Nuestro Matcha de grado ceremonial ofrece un aporte nutricional y antioxidante diez veces mayor que una infusión convencional.', 'matcha-product.jpg')">
-                    <div class="img-github-placeholder aspect-[4/5] mb-4">
-                        <img src="matcha-product.jpg" alt="Matcha Terciopelo" onerror="this.style.opacity=0">
+                    <div class="collection-frame group-hover:shadow-xl transition-all duration-500">
+                        <div class="img-github-placeholder aspect-[4/5] mb-4">
+                            <img src="matcha-product.jpg" alt="Matcha Terciopelo" onerror="this.style.opacity=0">
+                        </div>
+                        <h3 class="text-sm font-bold text-center">Matcha Terciopelo</h3>
+                        <p class="text-[10px] uppercase font-bold text-rosa text-center pb-2">Grado Ceremonial</p>
                     </div>
-                    <h3 class="text-sm font-bold text-center">Matcha Terciopelo</h3>
-                    <p class="text-[10px] uppercase font-bold text-rosa text-center">Grado Ceremonial</p>
                 </div>
                 <div class="reveal group cursor-pointer" style="transition-delay: 100ms;" onclick="openProduct('Rocío de Rosas', 'Floral', 'Infusión delicada de té blanco con pétalos de rosa reales y mensajes inspiradores en cada etiqueta.', 'rose-product.jpg')">
-                    <div class="img-github-placeholder aspect-[4/5] mb-4">
-                        <img src="rose-product.jpg" alt="Rocío de Rosas" onerror="this.style.opacity=0">
+                    <div class="collection-frame group-hover:shadow-xl transition-all duration-500">
+                        <div class="img-github-placeholder aspect-[4/5] mb-4">
+                            <img src="rose-product.jpg" alt="Rocío de Rosas" onerror="this.style.opacity=0">
+                        </div>
+                        <h3 class="text-sm font-bold text-center">Rocío de Rosas</h3>
+                        <p class="text-[10px] uppercase font-bold text-rosa text-center pb-2">Floral</p>
                     </div>
-                    <h3 class="text-sm font-bold text-center">Rocío de Rosas</h3>
-                    <p class="text-[10px] uppercase font-bold text-rosa text-center">Floral</p>
                 </div>
                 <div class="reveal group cursor-pointer" style="transition-delay: 200ms;" onclick="openProduct('Bosque Esmeralda', 'Cítrico', 'Té verde con toques de limón y verbena, presentado en nuestras icónicas bolsitas de corazón biodegradable.', 'forest-product.jpg')">
-                    <div class="img-github-placeholder aspect-[4/5] mb-4">
-                        <img src="forest-product.jpg" alt="Bosque Esmeralda" onerror="this.style.opacity=0">
+                    <div class="collection-frame group-hover:shadow-xl transition-all duration-500">
+                        <div class="img-github-placeholder aspect-[4/5] mb-4">
+                            <img src="forest-product.jpg" alt="Bosque Esmeralda" onerror="this.style.opacity=0">
+                        </div>
+                        <h3 class="text-sm font-bold text-center">Bosque Esmeralda</h3>
+                        <p class="text-[10px] uppercase font-bold text-rosa text-center pb-2">Cítrico</p>
                     </div>
-                    <h3 class="text-sm font-bold text-center">Bosque Esmeralda</h3>
-                    <p class="text-[10px] uppercase font-bold text-rosa text-center">Cítrico</p>
                 </div>
                 <div class="reveal group cursor-pointer" style="transition-delay: 300ms;" onclick="openProduct('Relax Hibiscus', 'Calma', 'Infusión con hibiscus y frutos del bosque para momentos de mindfulness y calma absoluta.', 'relax-product.jpg')">
-                    <div class="img-github-placeholder aspect-[4/5] mb-4">
-                        <img src="relax-product.jpg" alt="Relax Hibiscus" onerror="this.style.opacity=0">
+                    <div class="collection-frame group-hover:shadow-xl transition-all duration-500">
+                        <div class="img-github-placeholder aspect-[4/5] mb-4">
+                            <img src="relax-product.jpg" alt="Relax Hibiscus" onerror="this.style.opacity=0">
+                        </div>
+                        <h3 class="text-sm font-bold text-center">Relax Hibiscus</h3>
+                        <p class="text-[10px] uppercase font-bold text-rosa text-center pb-2">Calma</p>
                     </div>
-                    <h3 class="text-sm font-bold text-center">Relax Hibiscus</h3>
-                    <p class="text-[10px] uppercase font-bold text-rosa text-center">Calma</p>
                 </div>
             </div>
         </div>
@@ -368,7 +400,7 @@
             
             <div class="prose-text text-sm md:text-base font-medium text-emerald-50/90 space-y-10">
                 <div class="img-github-placeholder w-full h-80 mb-12 border-white/20">
-                    <img src="origen-del-te.jpg" alt="Hojas de Camellia Sinensis en su origen" onerror="this.style.opacity=0">
+                    <img src="camellia-sinensis.jpg" alt="Hojas de Camellia Sinensis en su origen" onerror="this.style.opacity=0">
                 </div>
 
                 <p>Hablar del origen del té es adentrarse en una historia milenaria que une naturaleza, cultura y espiritualidad. Mucho antes de convertirse en una de las bebidas más consumidas del mundo, el té ya simbolizaba sabiduría, equilibrio y conexión con la tierra.</p>
@@ -389,84 +421,117 @@
     </section>
 
     <!-- Matcha vs Té en Bolsitas -->
-    <section id="comparativa" class="py-24 px-6 bg-white overflow-hidden border-b border-gray-50">
-        <div class="max-w-4xl mx-auto reveal">
-            <h2 class="text-3xl font-extrabold mb-12 text-center uppercase tracking-widest text-emerald-900 leading-tight">Matcha vs Té en Bolsitas de Infucor</h2>
+    <section id="comparativa" class="py-24 px-6 bg-[#fcfcfc] overflow-hidden">
+        <div class="max-w-6xl mx-auto reveal">
+            <h2 class="text-3xl font-extrabold mb-16 text-center uppercase tracking-widest text-emerald-900 leading-tight">Matcha vs Té en Bolsitas de Infucor</h2>
             
-            <div class="prose-text text-emerald-900/80">
-                <h3 class="text-rosa">¿Qué es Matcha?</h3>
-                <p>El Matcha es un té verde en polvo de alta calidad, originario de Japón, obtenido a partir de hojas de Camellia sinensis finamente molidas. A diferencia de otros tés, donde se infusionan las hojas y luego se descartan, en el Matcha se consume toda la hoja en forma de polvo.</p>
-                <p>Esta característica lo convierte en una bebida intensa, con un perfil sensorial y nutricional distinto al de los tés infusionados tradicionales.</p>
+            <div class="grid md:grid-cols-2 gap-8 mb-16">
+                <!-- Tarjeta Matcha -->
+                <div class="comparison-card border-t-4 border-t-rosa">
+                    <h3 class="text-rosa text-xl mb-4">¿Qué es Matcha?</h3>
+                    <p class="text-sm text-emerald-900/80 leading-relaxed mb-6">El Matcha es un té verde en polvo de alta calidad, originario de Japón, obtenido a partir de hojas de Camellia sinensis finamente molidas. A diferencia de otros tés, donde se infusionan las hojas y luego se descartan, en el Matcha se consume toda la hoja en forma de polvo.</p>
+                    <p class="text-sm text-emerald-900/80 leading-relaxed">Esta característica lo convierte en una bebida intensa, con un perfil sensorial y nutricional distinto al de los tés infusionados tradicionales.</p>
+                </div>
+                <!-- Tarjeta Té Infucor -->
+                <div class="comparison-card border-t-4 border-t-emerald-800">
+                    <h3 class="text-emerald-800 text-xl mb-4">¿Qué es el té en bolsitas de Infucor?</h3>
+                    <p class="text-sm text-emerald-900/80 leading-relaxed mb-6">El té en bolsitas de Infucor también se elabora a partir de la planta Camellia sinensis, pero en formato de hoja troceada y empaquetada para infusión. En este caso:</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3 text-xs font-bold text-emerald-900/70"><i class="fas fa-check text-rosa mt-0.5"></i> Se infusionan las hojas en agua caliente.</li>
+                        <li class="flex items-start gap-3 text-xs font-bold text-emerald-900/70"><i class="fas fa-check text-rosa mt-0.5"></i> Las hojas se retiran junto con la bolsita al finalizar la preparación.</li>
+                        <li class="flex items-start gap-3 text-xs font-bold text-emerald-900/70"><i class="fas fa-check text-rosa mt-0.5"></i> El resultado es una taza suave y equilibrada, fácil de preparar y consistente.</li>
+                    </ul>
+                </div>
+            </div>
 
-                <h3 class="text-rosa">¿Qué es el té en bolsitas de Infucor?</h3>
-                <p>El té en bolsitas de Infucor también se elabora a partir de la planta Camellia sinensis, pero en formato de hoja troceada y empaquetada para infusión. En este caso:</p>
-                <ul class="list-disc pl-5 mb-6 space-y-2 text-sm">
-                    <li>Se infusionan las hojas en agua caliente.</li>
-                    <li>Las hojas se retiran junto con la bolsita al finalizar la preparación.</li>
-                    <li>El resultado es una taza suave y equilibrada, fácil de preparar y consistente.</li>
-                </ul>
-
-                <h3 class="text-rosa">Preparación: Matcha vs té en bolsitas</h3>
-                <h4 class="font-bold text-sm uppercase mb-4">Preparación de Matcha</h4>
-                <p>La preparación del Matcha se diferencia radicalmente de la del té en bolsitas:</p>
-                <ul class="list-disc pl-5 mb-6 space-y-2 text-sm">
-                    <li>Calentar agua: lo ideal es agua a ~80 °C (no hirviendo).</li>
-                    <li>Tamizar el polvo: se tamiza la cantidad de Matcha para evitar grumos.</li>
-                    <li>Batido: se mezcla con un batidor de bambú (chasen) o con un batidor eléctrico hasta obtener una espuma ligera.</li>
-                    <li>Consumo completo de la hoja: al beber Matcha no se descarta ningún residuo vegetal.</li>
-                </ul>
-                <p>Este método produce una bebida con cuerpo, textura aterciopelada y sabor más concentrado.</p>
-
-                <h4 class="font-bold text-sm uppercase mb-4">Preparación del té en bolsitas de Infucor</h4>
-                <p>La preparación del té en bolsitas de Infucor es más simple:</p>
-                <ul class="list-disc pl-5 mb-6 space-y-2 text-sm">
-                    <li>Hervir agua: agua a punto de ebullición.</li>
-                    <li>Colocar la bolsita en la taza o tetera.</li>
-                    <li>Verter el agua caliente sobre la bolsita.</li>
-                    <li>Tiempo de infusión: entre 3 y 5 minutos según intensidad deseada.</li>
-                    <li>Retirar la bolsita y disfrutar.</li>
-                </ul>
-                <p>Este método produce una infusión aromática, suave y equilibrada, ideal para consumo diario y rápido.</p>
-
-                <h3 class="text-rosa">Perfil sensorial</h3>
-                <div class="grid md:grid-cols-2 gap-8 mb-8">
-                    <div class="bg-pink-50/20 p-6 rounded-2xl">
-                        <h4 class="font-extrabold text-xs uppercase mb-3">Matcha</h4>
-                        <p class="text-xs"><strong>Sabor:</strong> umami intenso, herbáceo, con notas dulces y a veces ligeramente amargas.</p>
-                        <p class="text-xs"><strong>Textura:</strong> cremosa y densa, con cuerpo.</p>
-                        <p class="text-xs"><strong>Aroma:</strong> repleto de notas verdes y frescas.</p>
+            <!-- Preparación Visual -->
+            <div class="bg-white rounded-[3rem] p-10 md:p-16 shadow-sm border border-gray-100 mb-16">
+                <h3 class="text-rosa text-center mb-12">Preparación: Matcha vs té en bolsitas</h3>
+                <div class="grid md:grid-cols-2 gap-16">
+                    <div>
+                        <h4 class="font-bold text-sm uppercase mb-6 flex items-center gap-3"><span class="w-8 h-8 rounded-full bg-rosa/20 text-rosa flex items-center justify-center text-[10px]">M</span> Preparación de Matcha</h4>
+                        <p class="text-xs text-emerald-900/60 mb-6">La preparación del Matcha se diferencia radicalmente de la del té en bolsitas:</p>
+                        <ul class="space-y-4">
+                            <li class="text-xs text-emerald-900/80 pl-4 border-l-2 border-rosa/30"><strong class="block text-emerald-900">Calentar agua:</strong> lo ideal es agua a ~80 °C (no hirviendo).</li>
+                            <li class="text-xs text-emerald-900/80 pl-4 border-l-2 border-rosa/30"><strong class="block text-emerald-900">Tamizar el polvo:</strong> se tamiza la cantidad de Matcha para evitar grumos.</li>
+                            <li class="text-xs text-emerald-900/80 pl-4 border-l-2 border-rosa/30"><strong class="block text-emerald-900">Batido:</strong> se mezcla con un batidor de bambú (chasen) o con un batidor eléctrico hasta obtener una espuma ligera.</li>
+                            <li class="text-xs text-emerald-900/80 pl-4 border-l-2 border-rosa/30"><strong class="block text-emerald-900">Consumo completo de la hoja:</strong> al beber Matcha no se descarta ningún residuo vegetal.</li>
+                        </ul>
+                        <p class="text-[10px] mt-6 italic text-emerald-900/40">Este método produce una bebida con cuerpo, textura aterciopelada y sabor más concentrado.</p>
                     </div>
-                    <div class="bg-emerald-50/20 p-6 rounded-2xl">
-                        <h4 class="font-extrabold text-xs uppercase mb-3">Té en bolsitas de Infucor</h4>
-                        <p class="text-xs"><strong>Sabor:</strong> suave, limpio y variable según tipo de té (verde, negro, etc.).</p>
-                        <p class="text-xs"><strong>Textura:</strong> ligera y fluida.</p>
-                        <p class="text-xs"><strong>Aroma:</strong> delicado, con matices florales o frutales según la mezcla.</p>
+                    <div>
+                        <h4 class="font-bold text-sm uppercase mb-6 flex items-center gap-3"><span class="w-8 h-8 rounded-full bg-emerald-900/10 text-emerald-800 flex items-center justify-center text-[10px]">T</span> Té en bolsitas de Infucor</h4>
+                        <p class="text-xs text-emerald-900/60 mb-6">La preparación del té en bolsitas de Infucor es más simple:</p>
+                        <ul class="space-y-4">
+                            <li class="text-xs text-emerald-900/80 pl-4 border-l-2 border-emerald-800/20"><strong class="block text-emerald-900">Hervir agua:</strong> agua a punto de ebullición.</li>
+                            <li class="text-xs text-emerald-900/80 pl-4 border-l-2 border-emerald-800/20"><strong class="block text-emerald-900">Colocar la bolsita:</strong> en la taza o tetera.</li>
+                            <li class="text-xs text-emerald-900/80 pl-4 border-l-2 border-emerald-800/20"><strong class="block text-emerald-900">Verter agua:</strong> caliente sobre la bolsita.</li>
+                            <li class="text-xs text-emerald-900/80 pl-4 border-l-2 border-emerald-800/20"><strong class="block text-emerald-900">Tiempo de infusión:</strong> entre 3 y 5 minutos según intensidad deseada.</li>
+                            <li class="text-xs text-emerald-900/80 pl-4 border-l-2 border-emerald-800/20"><strong class="block text-emerald-900">Retirar:</strong> la bolsita y disfrutar.</li>
+                        </ul>
+                        <p class="text-[10px] mt-6 italic text-emerald-900/40">Este método produce una infusión aromática, suave y equilibrada, ideal para consumo diario y rápido.</p>
                     </div>
                 </div>
+            </div>
 
-                <h3 class="text-rosa">Nutrientes y beneficios</h3>
-                <h4 class="font-bold text-sm uppercase mb-4">Matcha</h4>
-                <p>Al consumirse el polvo completo de la hoja, el Matcha ofrece:</p>
-                <ul class="list-disc pl-5 mb-6 space-y-2 text-sm">
-                    <li>Mayor contenido de antioxidantes (EGCG y polifenoles).</li>
-                    <li>L-teanina en mayor concentración, lo que favorece sensación de calma y enfoque.</li>
-                    <li>Contenido de cafeína más sostenido, ofreciendo energía sin picos bruscos.</li>
-                </ul>
+            <!-- Perfil Sensorial Estético -->
+            <div class="grid md:grid-cols-2 gap-8 mb-16">
+                <div class="bg-pink-50/40 p-8 rounded-[2.5rem] border border-pink-100">
+                    <h3 class="text-rosa text-lg mb-6 flex items-center gap-3"><i class="fas fa-leaf"></i> Perfil Sensorial Matcha</h3>
+                    <div class="space-y-4">
+                        <div class="pb-3 border-b border-pink-100"><span class="text-[10px] font-extrabold uppercase text-pink-300 block mb-1">Sabor</span> <p class="text-xs font-bold">Umami intenso, herbáceo, con notas dulces y a veces ligeramente amargas.</p></div>
+                        <div class="pb-3 border-b border-pink-100"><span class="text-[10px] font-extrabold uppercase text-pink-300 block mb-1">Textura</span> <p class="text-xs font-bold">Cremosa y densa, con cuerpo.</p></div>
+                        <div><span class="text-[10px] font-extrabold uppercase text-pink-300 block mb-1">Aroma</span> <p class="text-xs font-bold">Repleto de notas verdes y frescas.</p></div>
+                    </div>
+                </div>
+                <div class="bg-emerald-50/40 p-8 rounded-[2.5rem] border border-emerald-100">
+                    <h3 class="text-emerald-800 text-lg mb-6 flex items-center gap-3"><i class="fas fa-mug-hot"></i> Perfil Sensorial Té Infucor</h3>
+                    <div class="space-y-4">
+                        <div class="pb-3 border-b border-emerald-100"><span class="text-[10px] font-extrabold uppercase text-emerald-300 block mb-1">Sabor</span> <p class="text-xs font-bold">Suave, limpio y variable según tipo de té (verde, negro, etc.).</p></div>
+                        <div class="pb-3 border-b border-emerald-100"><span class="text-[10px] font-extrabold uppercase text-emerald-300 block mb-1">Textura</span> <p class="text-xs font-bold">Ligera y fluida.</p></div>
+                        <div><span class="text-[10px] font-extrabold uppercase text-emerald-300 block mb-1">Aroma</span> <p class="text-xs font-bold">Delicado, con matices florales o frutales según la mezcla.</p></div>
+                    </div>
+                </div>
+            </div>
 
-                <h4 class="font-bold text-sm uppercase mb-4">Té en bolsitas de Infucor</h4>
-                <p>La infusión proporciona beneficios clásicos del té:</p>
-                <ul class="list-disc pl-5 mb-6 space-y-2 text-sm">
-                    <li>Antioxidantes disueltos en el agua de la infusión.</li>
-                    <li>Menor aporte de cafeína por taza en comparación con Matcha.</li>
-                    <li>Sabor y experiencia variables según tipo de hoja y mezcla.</li>
-                </ul>
-
-                <h3 class="text-rosa">Experiencia de consumo</h3>
-                <h4 class="font-bold text-sm uppercase mb-4">Matcha</h4>
-                <p>Ritualizado: su preparación requiere dedicación y atención. Ideal para momentos de pausa consciente o ritual de bienestar. Se consume en porciones más pequeñas y concentradas.</p>
-                
-                <h4 class="font-bold text-sm uppercase mb-4">Té en bolsitas de Infucor</h4>
-                <p>Cotidiano y práctico: perfecto para consumo diario o en movimiento. Preparación rápida y sencilla. Versátil: se puede acompañar con leche, miel, limón o sola.</p>
+            <!-- Beneficios y Experiencia -->
+            <div class="grid md:grid-cols-2 gap-12 text-emerald-900/80">
+                <div>
+                    <h3 class="text-rosa text-xl mb-6">Nutrientes y beneficios</h3>
+                    <div class="space-y-8">
+                        <div>
+                            <h4 class="font-bold text-xs uppercase mb-3 text-emerald-900">Matcha</h4>
+                            <p class="text-xs mb-3">Al consumirse el polvo completo de la hoja, el Matcha ofrece:</p>
+                            <ul class="space-y-2">
+                                <li class="text-xs flex gap-2"><span class="text-rosa">•</span> Mayor contenido de antioxidantes (EGCG y polifenoles).</li>
+                                <li class="text-xs flex gap-2"><span class="text-rosa">•</span> L-teanina en mayor concentración, lo que favorece sensación de calma y enfoque.</li>
+                                <li class="text-xs flex gap-2"><span class="text-rosa">•</span> Contenido de cafeína más sostenido, ofreciendo energía sin picos bruscos.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-xs uppercase mb-3 text-emerald-900">Té en bolsitas de Infucor</h4>
+                            <p class="text-xs mb-3">La infusión proporciona beneficios clásicos del té:</p>
+                            <ul class="space-y-2">
+                                <li class="text-xs flex gap-2"><span class="text-emerald-800">•</span> Antioxidantes disueltos en el agua de la infusión.</li>
+                                <li class="text-xs flex gap-2"><span class="text-emerald-800">•</span> Menor aporte de cafeína por taza en comparación con Matcha.</li>
+                                <li class="text-xs flex gap-2"><span class="text-emerald-800">•</span> Sabor y experiencia variables según tipo de hoja y mezcla.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-rosa text-xl mb-6">Experiencia de consumo</h3>
+                    <div class="space-y-8">
+                        <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-50">
+                            <h4 class="font-bold text-xs uppercase mb-3 text-emerald-900">Matcha</h4>
+                            <p class="text-xs leading-relaxed">Ritualizado: su preparación requiere dedicación y atención. Ideal para momentos de pausa consciente o ritual de bienestar. Se consume en porciones más pequeñas y concentradas.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-50">
+                            <h4 class="font-bold text-xs uppercase mb-3 text-emerald-900">Té en bolsitas de Infucor</h4>
+                            <p class="text-xs leading-relaxed">Cotidiano y práctico: perfecto para consumo diario o en movimiento. Preparación rápida y sencilla. Versátil: se puede acompañar con leche, miel, limón o sola.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -481,7 +546,7 @@
             
             <div class="reveal mb-16">
                 <div class="img-github-placeholder w-full aspect-video rounded-[3rem]">
-                    <img src="ritual-preparacion-te.jpg" alt="Ritual de preparación Infucor Horizontal" onerror="this.style.opacity=0">
+                    <img src="utensilios-tea.jpg" alt="Ritual de preparación Infucor Horizontal" onerror="this.style.opacity=0">
                 </div>
             </div>
 
